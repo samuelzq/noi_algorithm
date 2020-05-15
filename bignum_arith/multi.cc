@@ -30,12 +30,12 @@ void doulbe_precision_m(string a, string b, int *c)
 	int i = 0;
 
 	while (i < b.length()) {
-		for (int j = 0; j < a.length(); j++)
+		for (int j = 0; j < a.length(); j++) {
 			c[j + i] += c2i(a[j]) * c2i(b[i]);
-
-		if (c[i] >= 10) {
-			c[i + 1] += c[i] / 10;
-			c[i] %= 10;
+			if (c[j + i] >= 10) {
+				c[j + i + 1] += c[j + i] / 10;
+				c[j + i] %= 10;
+			}
 		}
 		i++;
 	}
@@ -45,13 +45,15 @@ int main()
 {
 	string s1, s2;
 
+	std::ios::sync_with_stdio(false);
+
 	while (cin >> s1 >> s2) {
 		string a, b;
 		a.assign(s1.rbegin(), s1.rend());
 		b.assign(s2.rbegin(), s2.rend());
 		int len = max(a.length(), b.length()) * 2;
 		int *c = new int[len]();
-		pad_zero(a, b);
+		//pad_zero(a, b);
 		doulbe_precision_m(a, b, c);
 		while ((!c[len - 1]) && len > 1)
 				len--;
