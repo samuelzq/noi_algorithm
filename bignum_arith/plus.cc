@@ -48,7 +48,7 @@ int main()
 		for (int i = len; i > 0; i--)
 			cout << c[i - 1];
 		cout << endl;
-		delete c;
+		delete[] c;
 	}
 	return 0;
 }

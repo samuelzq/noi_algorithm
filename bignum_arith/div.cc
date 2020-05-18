@@ -72,8 +72,8 @@ int main()
 		for (int i = lr; i > 0; i--)
 			cout << r[i - 1];
 		cout << '\n';
-		delete r;
-		delete q;
+		delete[] r;
+		delete[] q;
 	}
 	return 0;
 }
