@@ -18,6 +18,18 @@ using namespace std;
 		t = a / b;
 		t.print();
 		cout << endl;
+		t = a ^ b;
+		t.print();
+		cout << endl;
+		t = a ^ 3;
+		t.print();
+		cout << endl;
+		t = a % b;
+		t.print();
+		cout << endl;
+		t = a % 3;
+		t.print();
+		cout << endl;
 	}
 	
 	return 0;

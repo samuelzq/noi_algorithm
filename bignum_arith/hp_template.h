@@ -8,7 +8,7 @@
 #include <cstring>
 
 #define DLEN 4             // MAX length
-#define MAXN 9999          // 99999^2 = 9,999,800,001‬
+#define MAXN 9999          // 99999^2 = 9,999,800,001
 #define MAXSIZE 10024
 
 
@@ -38,11 +38,12 @@ public:
 	Big operator/(const int&) const;
 	Big operator/(const Big& T) const;
 	Big operator^(const int&) const;
-	// TODO: Big ^ Big;
+	Big operator^(const Big&) const;
 	
 	// TODO: Big Bitwise;
 	
 	int operator%(const int&) const;
+	Big operator%(const Big&) const;
 	bool operator==(const int&) const;
 	// TODO: Big % Big;
 	bool operator<(const Big&) const;
@@ -299,15 +300,48 @@ int Big::operator%(const int& b) const
 		d = (d * (MAXN + 1) % b + a[i]) % b;
 	return d;
 }
+
+Big Big::operator%(const Big& T) const
+{
+	Big res;
+	if (T == 0)
+		return res;
+
+	res = *this;
+	for (int i = len - T.len; i >= 0; --i) {
+		// get the ith bit
+		while (greater_eq(res.a, T.a, i, T.len)) {
+			// High precision subtraction
+			for (int j = 0; j < T.len; ++j) {
+				res.a[i + j] -= T.a[j];
+				if (res.a[i + j] < 0) {
+					res.a[i + j + 1] -= 1;
+					res.a[i + j] += MAXN + 1;
+				}
+			}
+		}
+	}
+	while (res.len > 1 && res.a[res.len - 1] == 0)
+		--res.len;
+	return res;
+}
+
 Big Big::operator^(const int& n) const
 {
-	Big t(n), res(1);
+	Big res(1);
 	int y = n;
-	while (y) {
-		if (y & 1)
-			res = res * t;
-		t = t * t;
-		y >>= 1;
+	while (y--)
+		res = res * (*this);
+	return res;
+}
+
+Big Big::operator^(const Big& T) const
+{
+	Big res(1);
+	for (int i = 0; i < T.len; i++) {
+		int y = T.a[i];
+		while (y--)
+			res = res * (*this);
 	}
 	return res;
 }
