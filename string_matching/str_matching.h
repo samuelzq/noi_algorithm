@@ -232,4 +232,49 @@ exit:
 	delete[] shift;
 	return 0;
 }
+
+
+// a bit-oriented approach
+void dynamic_shift_matching(string p, string t)
+{
+	const int cell_len = sizeof(int);
+	int m = p.length(), n = t.length();
+	int cell_num = (m % cell_len) ? (m / cell_len) : (m / cell_len + 1);
+	int last_bit = 1, match = 1;
+	int *chr_in_p = new int[cell_num * 256]();
+	int *state = new int[cell_num]();
+
+	for (int i = 1; i < m - cell_len * (cell_num - 1) - 1; i++)
+		match << 1; // only need to check the highest cell
+
+	// Initialize the pattern character position table
+	for (int k = 0; k < cell_num; k++) {
+		for (int i = k * cell_len, j = 1; i < (k + 1) * cell_len && i < m;) {
+			chr_in_p[p[i] + k] |= j;
+			j = j << 1;
+			i++
+		}
+	}
+
+	for (int i = 0; i < m; i++) {
+		int c = i % cell_len, k = i / cell_len;
+		for (int k = 0; k < cell_num; k++) {
+			for (int j = k * cell_len, l = 1; j < m; j++) {
+				chr_in_p[p[i] * cell_numm + k] |= j;
+				j = j << 1;
+			}
+		}
+	}
+	for (int i = 0; i < n - 1; i++) {
+		int first_bit = 0;
+		for (int j = cell_num; j > 0; j--) {
+			first_bit = ((state[j - 1] & last_bit) == 0) ? 0 : 1;
+			state[j] = ((state[j] << 1) | first_bit) & chr_in_p[t[i] + j];
+		}
+		state[0] = ((state[0] << 1) | 1) & chr_in_p[t[i]];
+
+		if ((match & state[cell_num - 1]) != 0)
+			std::cout << "A match at " << i - m + 1;
+	}
+}
 #endif
