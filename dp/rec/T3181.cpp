@@ -1,3 +1,6 @@
+// 由于木棒的长度只可能是1或者2,因此每个新的长度只能由前两个
+// 长度叠加得到。
+
 #include <iostream>
 #include <algorithm>
 #include <cmath>

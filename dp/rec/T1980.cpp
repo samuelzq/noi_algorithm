@@ -1,3 +1,5 @@
+// 找出每一次迭代的状态转换方程即可。
+
 #include <iostream>
 
 using namespace std;
