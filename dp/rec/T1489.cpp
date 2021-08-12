@@ -12,8 +12,8 @@ int main(void)
 	
 	for (int i = 2; i <= n; i++) {
 		for (int j = i; j <= n; j += i) {
-			l[j] ^= 1;
-		} 
+			l[j] ^= 1;  // 改变灯的开关状态
+		}
 	}
 	for (int i = 1; i <= n; i++)
 		cout << l[i];
