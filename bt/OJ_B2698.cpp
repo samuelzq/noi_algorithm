@@ -2,6 +2,8 @@
  * http://bailian.openjudge.cn/practice/2698?lang=en_US
  * https://vjudge.net/problem/OpenJ_Bailian-2698
  *
+ * 题中有一个陷阱，深搜的时候是按列输出的，不是行输出
+ *
  * @File:   OJ_B2698.cpp
  * @Author: Lao Zhang <samuelzhang77@yahoo.com>
  * @Date:   2022-03-07
