@@ -29,7 +29,7 @@ backtrack(路径, 选择列表)
 
 
 ### 8皇后 ###
-棋盘上的每一行可以视为决策树上的一层，该行上的每一格是可控的选择。其为代码如下：
+棋盘上的每一行可以视为决策树上的一层，该行上的每一格是可控的选择。其伪代码如下：
 void dfs(int size, int row)
     // 触发结束条件
     if row == size
@@ -59,3 +59,89 @@ void dfs(int size, int row)
 仅记录每一列和每一条对角线的空闲情况。列的空闲可以用数组vc[N]记录，可以用当前格子
 的列编号j索引；左对角线上每一个格子的纵横坐标和都相等，因此可以用行列编号之和索引
 i+j；右对角线上的每个格子的纵横坐标之差是个常数，为避免出现负数，需要额外加上N。
+
+
+### Backtracking ###
+枚举多维数值的一种方法。
+利用递归依序穷举各个维度的数值，制作所有可能的多维度数值，在递归的过程中应避免枚
+举不正确的多维度数值。伪代码如下：
+
+int solution[MAX_DIMENSION];    // 多維数值
+
+void backtrack(int dimension)
+{
+    /* prune：在递归过程中避免枚举不正确的多维度数值 */
+    if ( solution[] will not be an answer ) return;
+
+    /* 制作作了一组多维度数值，并检验並正不正确 */
+    if ( dimension == MAX_DIMENSION )
+    {
+        check and record solution[];
+        return;
+    }
+
+    /* 枚举该维度下的所有数值，并递归到下一个维度 */
+    for ( x = possible value of current dimension )
+    {
+        solution[dimension] = x;
+        backtrack( dimension + 1 );
+    }
+}
+
+int main()
+{
+    backtrack(0);   // 从第一个维度开始枚举
+}
+
+如果仅需一组多维数值，可以提早结束所有的递归过程：
+
+int solution[MAX_DIMENSION];
+bool find_answer = false;   // 随时记录是否已经找到正解
+
+void backtrack(int dimension)
+{
+    if ( dimension == MAX_DIMENSION )
+    {
+        check and record solution;
+        find_answer = true; // 找到正解了
+        return;
+    }
+
+    for ( x = possible value of current dimension )
+    {
+        solution[dimension] = x;
+        backtrack( dimension + 1 );
+        if (find_answer) return;    // 提早結束，跳出递归
+    }
+}
+
+当需要比较不同多维数组之间的优劣时，需要岁时除劣保优。
+
+int solution[MAX_DIMENSION];
+bool find_answer = false;
+int best_cost;  // 代表多维度数值的优劣
+
+void backtrack(int dimension)
+{
+    /* bound：多维度数值太糟了，不可能成为正解，不必递归下去 */
+    int cost = cost of solution[];  // 计算优劣
+    if ( cost is far away from best_cost ) return;
+
+    if ( dimension == MAX_DIMENSION )
+    {
+        check and record solution[];
+
+        /* bound：多维度数值够好了，可以成为正解，不必递归下去 */
+        best_cost = cost;   // 记录当前最佳結果
+        if ( cost is enough good ) find_answer = true;
+
+        return;
+    }
+
+    for ( x = possible value of current dimension )
+    {
+        solution[dimension] = x;
+        backtrack( dimension + 1 );
+        if (find_answer) return;
+    }
+}
