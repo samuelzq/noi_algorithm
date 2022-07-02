@@ -1,0 +1,44 @@
+/**
+ * 硬币找零 计蒜客 - T1781
+ * https://vjudge.net/problem/%E8%AE%A1%E8%92%9C%E5%AE%A2-T1781
+ *
+ * 完全背包问题。
+ * 本题求最小值，注意有不存在的情况。
+ *
+ * @File:   T1781.cpp
+ * @Author: Lao Zhang <samuelzhang77@yahoo.com>
+ * @Date:   2022-07-06
+ *
+ **/
+#include <iostream>
+#include <cmath>
+#include <cstring>
+
+using namespace std;
+
+const int MAX = 0x3f3f3f3f;
+const int M = 100005;
+int dp[M];
+
+int main(void)
+{
+	int n, m, v;
+
+	memset(dp, MAX, sizeof(dp));
+
+	dp[0] = 0;
+	cin >> n >> m;
+	for (int i = 1; i <= n; i++) {
+		int t;
+		cin >> v;
+		for (int j = 1; j <= m; j++) {
+			if (j >= v)
+				dp[j] = min(dp[j - v] + 1, dp[j]);
+		}
+	}
+	if (dp[m] != MAX)
+		cout << dp[m];
+	else
+		cout << -1;
+	return 0;
+}
