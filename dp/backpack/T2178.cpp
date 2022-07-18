@@ -18,6 +18,36 @@ int dp[1005];
 int w[7] = {0, 1, 2, 3, 5, 10, 20};
 int num[7];
 
+// 遍历每一类物品中的每一个
+void knapsack(int t)
+{
+	dp[0] = 1;
+	for (int i = 1; i<= 6; i++) {
+		for (int k = 1; k <= num[i]; k++)
+			for (int j = t; j >= w[i]; j--)
+				if (dp[j - w[i]])
+					dp[j] = 1;
+	}
+}
+
+// 将同类物品按1、2、4、8、…… 、2^k、M-2^k打包。它们之间按0-1组合，可以
+// 组合出各种数量的物品。
+void knapsack2(int t)
+{
+	dp[0] = 1;
+	for (int i = 1; i<= 6; i++) {
+		int n = min(num[i], t / w[i]);
+		for (int k = 1; n > 0; k *= 2) {
+			if (k > n)
+				k = n;
+			n -= k;
+			for (int j = t; j >= k * w[i]; j--)
+				if (dp[j - k*w[i]])
+					dp[j] = 1;
+		}
+	}
+}
+
 int main(void)
 {
 	int t, sum = 0;
@@ -26,13 +56,7 @@ int main(void)
 		sum += num[i] * w[i];
 	}
 
-	dp[0] = 1;
-	for (int i = 1; i<= 6; i++) {
-		for (int k = 1; k <= num[i]; k++)
-			for (int j = sum; j >= k * w[i]; j--)
-				if (dp[j - k * w[i]])
-					dp[j] = 1;
-	}
+	knapsack2(sum);
 
 	t = 0;
 	for (int i = 1; i <= sum; i++)
