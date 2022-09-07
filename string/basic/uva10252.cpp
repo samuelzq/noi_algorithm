@@ -1,4 +1,9 @@
 /**
+ * Common Permutation UVA - 10252
+ * https://vjudge.net/problem/UVA-10252
+ *
+ * 分别统计26个小写字符在每个字符串中出现的次数。
+ * 然后取每个字符出现次数的最小值。最后依次输出每个字符。
  *
  * @File:   uva10252.cpp
  * @Author: Lao Zhang <samuelzhang77@yahoo.com>
@@ -15,7 +20,8 @@ int cnt2[27];
 int main(void)
 {
 	string str1, str2;
-	while (cin >> str1 >> str2) {
+	while (getline(cin, str1)) {
+		getline(cin, str2);
 		memset(cnt1, 0, sizeof(cnt1));
 		memset(cnt2, 0, sizeof(cnt2));
 		for (int i = 0; i < str1.length(); i++)
@@ -26,17 +32,11 @@ int main(void)
 		for (int i = 0; i < 26; i++)
 			cnt1[i] = min(cnt1[i], cnt2[i]);
 
-		stack<char> st;
-		for (int i = 0; i < str1.length(); i++) {
-			if (cnt1[str1[i] - 'a'])
-				st.push(str1[i]);
+		for (int i = 0; i < 26; i++) {
+			for (int j = 0; j < cnt1[i]; j++)
+				cout << (char)(i + 'a');
 		}
 
-		while (!st.empty()) {
-			char c = st.top();
-			cout << c;
-			st.pop();
-		}
 		cout << '\n';
 	}
 	return 0;

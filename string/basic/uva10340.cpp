@@ -1,4 +1,9 @@
 /**
+ * All in All UVA - 10340
+ * https://vjudge.net/problem/UVA-10340
+ *
+ * 暴力枚举。
+ * 在第二个字符串中依次枚举第一个字符串中的每一个字符。
  *
  * @File:   uva10340.cpp
  * @Author: Lao Zhang <samuelzhang77@yahoo.com>
@@ -34,9 +39,9 @@ int main(void)
 				ans = false;
 		}
 		if (ans)
-			cout << "YES\n";
+			cout << "Yes\n";
 		else
-			cout << "NO\n";
+			cout << "No\n";
 	}
 	return 0;
 }
